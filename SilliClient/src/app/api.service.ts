@@ -17,6 +17,8 @@ export class ApiService {
   }
 
   postRequest(path: string, body: any){
-    this.http.post(`${this.uri}/${path}`, body, {}).pipe(catchError(this.errorService.handleError));
+    console.log("anything?");
+    this.http.post(`${this.uri}/${path}`, body).subscribe(response =>
+    {console.log(response)});
   }
 }

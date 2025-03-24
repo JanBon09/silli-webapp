@@ -1,6 +1,7 @@
 package org.silli.sillibackend.controllers;
 
 import org.silli.sillibackend.models.Account;
+import org.silli.sillibackend.models.AccountDto;
 import org.silli.sillibackend.services.AccountService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,15 +21,21 @@ public class AccountController {
         this.authenticationManager = authenticationManager;
     }
 
-    @GetMapping
-    public ResponseEntity<Iterable<Account>> findAll() {
-        return ResponseEntity.ok(accountService.getAll());
-    }
-
-    @PostMapping("/create")
-    public ResponseEntity<Object> register(@RequestBody Account account) {
+    @PostMapping("/register")
+    public ResponseEntity<Object> register(@RequestBody AccountDto accountDto) {
+        var account = new Account();
+        account.setUsername(accountDto.getUsername());
+        account.setPassword(accountDto.getPassword());
+        account.setEnabled(1);
+        account.setAuthority("ROLE_USER");
         accountService.persist(account);
 
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Object> login(@RequestBody AccountDto accountDto) {
+        var returnCode = accountService.login(accountDto);
+        return ResponseEntity.status(returnCode).build();
     }
 }
