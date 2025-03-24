@@ -1,0 +1,32 @@
+GET http://localhost:8080/hello
+Authorization: Basic Karoa Karo
+Accept: application/json
+
+###
+GET http://localhost:8080/users
+Authorization: Basic Karolina Karo
+Accept: application/json
+
+###
+POST http://localhost:8080/users/create
+Content-Type: application/json
+
+{
+  "username": "Karolina",
+  "password": "Karo",
+  "salt": "sol",
+  "email": "karolcia@gmail.com",
+  "createdAt": "",
+  "authorities": "all",
+  "posts": {
+
+  },
+  "comments": {
+
+  },
+  "groups": {
+
+  }
+}
+
+###

@@ -1,31 +1,34 @@
 package org.silli.sillibackend.controllers;
 
 import org.silli.sillibackend.models.Account;
-import org.silli.sillibackend.repositories.AccountRepository;
+import org.silli.sillibackend.services.AccountService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @CrossOrigin("http://localhost:4200")
 @RequestMapping("/users")
 public class AccountController {
-    public final AccountRepository accountRepository;
 
-    public AccountController(AccountRepository accountRepository) {
-        this.accountRepository = accountRepository;
+    private final AccountService accountService;
+    private final AuthenticationManager authenticationManager;
+
+    public AccountController(AccountService accountService, AuthenticationManager authenticationManager)
+    {
+        this.accountService = accountService;
+        this.authenticationManager = authenticationManager;
     }
 
     @GetMapping
     public ResponseEntity<Iterable<Account>> findAll() {
-        return ResponseEntity.ok(accountRepository.findAll());
+        return ResponseEntity.ok(accountService.getAll());
     }
 
-    @PostMapping
-    public void createAccount(){
+    @PostMapping("/create")
+    public ResponseEntity<Object> register(@RequestBody Account account) {
+        accountService.persist(account);
 
+        return ResponseEntity.ok().build();
     }
 }
