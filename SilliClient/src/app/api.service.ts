@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ErrorService} from './error.service';
-import {catchError} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +12,11 @@ export class ApiService {
   constructor(private http: HttpClient, private errorService: ErrorService) { }
 
   getRequest(path: string){
-    this.http.get(`${this.uri}/${path}`, {}).pipe(catchError(this.errorService.handleError));
+    this.http.get(`${this.uri}/${path}`, {});
   }
 
   postRequest(path: string, body: any){
-    console.log("anything?");
-    this.http.post(`${this.uri}/${path}`, body).subscribe(response =>
-    {console.log(response)});
+    console.log("POST");
+    return this.http.post(`${this.uri}/${path}`, body);
   }
 }

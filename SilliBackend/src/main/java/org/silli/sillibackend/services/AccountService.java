@@ -7,9 +7,12 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+// Service responsible for communicating authentication endpoints with repository
+//
 @Service
 public class AccountService {
     private final AccountRepository accountRepository;
@@ -24,11 +27,14 @@ public class AccountService {
         this.authenticationProvider = authenticationProvider;
     }
 
+    // Method receiving Account object from /users/register endpoint and giving it to the repository for persisting it
+    // Implements PasswordEncoder
     public void persist(Account account){
         account.setPassword(passwordEncoder.encode(account.getPassword()));
         accountRepository.save(account);
     }
 
+    // Method receiving AccountDto from /users/login endpoint and running it through authentication process
     public int login(AccountDto accountDto){
         UsernamePasswordAuthenticationToken authenticationToken
                 = new UsernamePasswordAuthenticationToken(accountDto.getUsername(), accountDto.getPassword());
@@ -36,6 +42,8 @@ public class AccountService {
             authenticationProvider.authenticate(authenticationToken);
         } catch (BadCredentialsException e){
             return 401;
+        } catch (UsernameNotFoundException e){
+            return 404;
         }
 
         return 200;

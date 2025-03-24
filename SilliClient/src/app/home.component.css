@@ -1,0 +1,26 @@
+.home{
+  background-color: rgba(102, 112, 124, 0);
+  text-align: center;
+  font-size: 72px;
+  height: 100%;
+  width: 100%;
+  color: white;
+}
+
+.home-create{
+  font-size: 28px;
+  border-radius: 35px;
+  padding: 10px;
+  transition: 1s ease;
+  background: #2b3039;
+}
+
+.home-create:hover{
+  box-shadow:0px 0px 0px 30px rgba(18, 123, 221, 0.47) inset;
+}
+
+.home-create:link, .home-create:visited{
+  text-decoration: none;
+  color: white;
+
+}

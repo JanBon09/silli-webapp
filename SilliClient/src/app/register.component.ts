@@ -9,15 +9,18 @@ import {FormsModule} from '@angular/forms';
   ],
   providers: [RegisterService],
   template: `
-    <div class="register">
-      <label for="username">Username: </label>
-      <input id="username" type="text" name="username" [(ngModel)]="username">
+    <div class="register-container">
+      <div class="register">
+        <label for="username">Username: </label>
+        <input class="register-input" id="username" type="text" name="username" [(ngModel)]="username">
 
-      <label for="password">Password: </label>
-      <input id="password" type="text" name="password" [(ngModel)]="password" >
-      <button (click)="this.registerService.register(this.username, this.password)">Register</button>
+        <label for="password">Password: </label>
+        <input class="register-input" id="password" type="text" name="password" [(ngModel)]="password" >
+        <button (click)="this.registerService.register(this.username, this.password)" class="register-submit">Register</button>
+      </div>
     </div>
-  `
+  `,
+  styleUrls: ['register.component.css']
 })
 
 export class RegisterComponent {

@@ -13,20 +13,15 @@ import javax.sql.DataSource;
 
 @Configuration
 public class AuthenticationConfiguration {
+    private final UserDetailsService userDetailsService;
+
+    public AuthenticationConfiguration(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
     }
 
-    @Bean
-    public UserDetailsService userDetailsService(DataSource dataSource) {
-        String usersByUsernameQuery = "SELECT username, password, enabled FROM accounts WHERE username LIKE ?";
-        String authsByUsernameQuery = "SELECT username, authority FROM accounts WHERE username LIKE ?";
-
-        var userDetailsService = new JdbcUserDetailsManager(dataSource);
-        userDetailsService.setUsersByUsernameQuery(usersByUsernameQuery);
-        userDetailsService.setAuthoritiesByUsernameQuery(authsByUsernameQuery);
-
-        return userDetailsService;
-    }
 }

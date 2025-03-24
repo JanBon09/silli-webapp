@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.logging.Logger;
+
 @RestController
 @CrossOrigin("http://localhost:4200")
 @RequestMapping("/users")
@@ -29,6 +31,9 @@ public class AccountController {
         account.setEnabled(1);
         account.setAuthority("ROLE_USER");
         accountService.persist(account);
+
+        Logger logger = Logger.getLogger(AccountController.class.getName());
+        logger.info("HALO");
 
         return ResponseEntity.ok().build();
     }

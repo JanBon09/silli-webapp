@@ -11,7 +11,9 @@ export class RegisterService {
   }
 
   register(username: string, password: string) {
-    console.log(username, password);
-    this.apiService.postRequest('users/register', new Account(username, password));
+    console.log("HALO");
+    this.apiService.postRequest('users/register', new Account(username, password)).subscribe(response => {
+      console.log(response);
+    });
   }
 }

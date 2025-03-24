@@ -1,8 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ApiService} from './api.service';
 
-
-
 export class Account{
   constructor(public username: String, public password: String){}
 }
@@ -15,6 +13,11 @@ export class LoginService {
 
   login(username: string, password: string) {
     let account = new Account(username, password);
-    this.apiService.postRequest('users/login', account);
+    this.apiService.postRequest('users/login', account).subscribe(response => {
+      console.log(response);
+    });
+  }
+
+  logout() {
   }
 }
