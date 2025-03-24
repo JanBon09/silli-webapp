@@ -2,9 +2,6 @@ CREATE TABLE accounts(
     id SERIAL PRIMARY KEY,
     username VARCHAR(32) UNIQUE NOT NULL,
     password TEXT NOT NULL,
-    salt TEXT NOT NULL,
-    email VARCHAR(254) UNIQUE NOT NULL,
-    createdAt TIMESTAMP NOT NULL,
     authorities VARCHAR(32) NOT NULL
 );
 
@@ -24,7 +21,7 @@ CREATE TABLE comments(
         ON DELETE CASCADE
 );
 
-CREATE TABLE posts(
+CREATE TABLE post(
     id SERIAL PRIMARY KEY,
     content TEXT NOT NULL,
     createdAt TIMESTAMP NOT NULL,

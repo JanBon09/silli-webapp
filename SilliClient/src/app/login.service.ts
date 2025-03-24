@@ -13,7 +13,7 @@ export class LoginService {
 
   login(username: string, password: string) {
     let account = new Account(username, password);
-    this.apiService.postRequest('users/login', account).subscribe(response => {
+    this.apiService.postRequest('users/login?username=' + username, account).subscribe(response => {
       console.log(response);
     });
   }

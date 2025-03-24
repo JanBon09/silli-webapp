@@ -4,10 +4,8 @@ import org.silli.sillibackend.models.Account;
 import org.silli.sillibackend.models.AccountDto;
 import org.silli.sillibackend.services.AccountService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.logging.Logger;
 
 @RestController
 @CrossOrigin("http://localhost:4200")
@@ -15,12 +13,10 @@ import java.util.logging.Logger;
 public class AccountController {
 
     private final AccountService accountService;
-    private final AuthenticationManager authenticationManager;
 
-    public AccountController(AccountService accountService, AuthenticationManager authenticationManager)
+    public AccountController(AccountService accountService)
     {
         this.accountService = accountService;
-        this.authenticationManager = authenticationManager;
     }
 
     @PostMapping("/register")
@@ -32,9 +28,6 @@ public class AccountController {
         account.setAuthority("ROLE_USER");
         accountService.persist(account);
 
-        Logger logger = Logger.getLogger(AccountController.class.getName());
-        logger.info("HALO");
-
         return ResponseEntity.ok().build();
     }
 
@@ -43,4 +36,5 @@ public class AccountController {
         var returnCode = accountService.login(accountDto);
         return ResponseEntity.status(returnCode).build();
     }
+
 }
