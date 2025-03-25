@@ -32,4 +32,15 @@ public class AccountController {
         return ResponseEntity.status(returnCode).build();
     }
 
+    @GetMapping
+    public ResponseEntity<String> whoAmI(@RequestBody int id) {
+        var publicInfo = accountService.introduce(id);
+
+        if(publicInfo.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(publicInfo);
+    }
+
 }

@@ -1,3 +1,17 @@
+POST http://localhost:8080/comment/create?postId=2
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAiLCJleHAiOjE3NDI5MzgyNzYsInN1YiI6InRvamE4In0.qlfbz4iqNakQhYJdkxjmEocSN09wYHbnyWWTh1m9UF8
+Content-Type: application/json
+
+{
+  "content": "What"
+}
+
+###
+GET http://localhost:8080/post?page=1&size=3&sortBy=id&ascending=true
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAiLCJleHAiOjE3NDI5MzczOTEsInN1YiI6InRvamE4In0.PT_mZGyU6ZWijNhqCEn5eYA9A_5RNysOtkOkN-ZYHYM
+Accept: application/json
+
+###
 GET http://localhost:8080/post
 Content-Type: application/json
 
@@ -22,21 +36,22 @@ Authorization: Basic Karolina Karo
 Accept: application/json
 
 ###
-POST http://localhost:8080/users/login?username=toja7
+POST http://localhost:8080/users/login?username=toja8
 Content-Type: application/json
 
 {
-  "password": "toja7",
-  "username": "toja7"
+  "password": "toja8",
+  "username": "toja8"
 }
 
 ###
 
 POST http://localhost:8080/post/create
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAiLCJleHAiOjE3NDI4NzEzMjQsInN1YiI6InRvamE3In0.6voxF8M8eMvVeNFibc4CO_5q4q6vyQrdlNv7GiI-MYc
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAiLCJleHAiOjE3NDI4OTc4OTQsInN1YiI6InRvamE4In0.r7qovd-71ZnplD6KGBS-S6QFzSyHN9Q7DeB9t8bkqaM
 Content-Type: application/json
 
 {
-  "content": "Halo halo"
+  "content": "Post 6"
 }
+
 

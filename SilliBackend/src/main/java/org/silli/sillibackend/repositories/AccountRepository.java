@@ -8,4 +8,7 @@ public interface AccountRepository extends CrudRepository<Account, Integer> {
 
     @Query("SELECT * FROM account WHERE username LIKE :username")
     Account findByUsername(String username);
+
+    @Query("SELECT username FROM account WHERE id = :id")
+    String findPublicInfoByID(int id);
 }

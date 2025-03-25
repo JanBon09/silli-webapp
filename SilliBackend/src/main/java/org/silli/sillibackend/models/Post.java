@@ -1,6 +1,7 @@
 package org.silli.sillibackend.models;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 
 import java.time.LocalDateTime;
 
@@ -9,9 +10,11 @@ public class Post {
     private int id;
 
     private String content;
+
+    @Column("createdat")
     private LocalDateTime createdAt;
-    private Account author;
-    private Iterable<Comment> comments;
+    @Column("account_id")
+    private int accountId;
 
     public int getId() {
         return id;
@@ -25,12 +28,8 @@ public class Post {
         return createdAt;
     }
 
-    public Account getAuthor() {
-        return author;
-    }
-
-    public Iterable<Comment> getComments() {
-        return comments;
+    public int getAccountId() {
+        return accountId;
     }
 
     public void setId(int id) {
@@ -45,11 +44,7 @@ public class Post {
         this.createdAt = createdAt;
     }
 
-    public void setAuthor(Account author) {
-        this.author = author;
-    }
-
-    public void setComments(Iterable<Comment> comments) {
-        this.comments = comments;
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
     }
 }

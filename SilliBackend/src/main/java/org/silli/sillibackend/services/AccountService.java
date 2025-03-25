@@ -58,4 +58,9 @@ public class AccountService {
         return accountRepository.findAll();
     }
 
+    public String introduce(int id){
+
+        return accountRepository.findPublicInfoByID(id);
+    }
+
 }
