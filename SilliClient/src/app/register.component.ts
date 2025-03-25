@@ -11,6 +11,7 @@ import {FormsModule} from '@angular/forms';
   template: `
     <div class="register-container">
       <div class="register">
+        <h3 class="register-title">Register</h3>
         <label for="username">Username: </label>
         <input class="register-input" id="username" type="text" name="username" [(ngModel)]="username">
 

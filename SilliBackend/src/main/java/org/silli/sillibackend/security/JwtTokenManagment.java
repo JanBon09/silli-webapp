@@ -30,7 +30,7 @@ public class JwtTokenManagment {
     }
 
     public JwtDecoder jwtDecoder(){
-        SecretKey originalKey = new SecretKeySpec("aaaa".getBytes(), "hmacSHA256");
+        SecretKey originalKey = new SecretKeySpec(secretKey.getBytes(), "hmacSHA256");
 
         return NimbusJwtDecoder.withSecretKey(originalKey).build();
     }

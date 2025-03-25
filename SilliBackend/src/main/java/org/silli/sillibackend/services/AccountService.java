@@ -29,8 +29,13 @@ public class AccountService {
 
     // Method receiving Account object from /users/register endpoint and giving it to the repository for persisting it
     // Implements PasswordEncoder
-    public void persist(Account account){
-        account.setPassword(passwordEncoder.encode(account.getPassword()));
+    public void persist(AccountDto accountDto){
+        var account = new Account();
+        account.setUsername(accountDto.getUsername());
+        account.setPassword(passwordEncoder.encode(accountDto.getPassword()));
+        account.setEnabled(1);
+        account.setAuthority("ROLE_USER");
+
         accountRepository.save(account);
     }
 

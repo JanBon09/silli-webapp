@@ -1,4 +1,19 @@
-GET http://localhost:8080/users
+GET http://localhost:8080/post
+Content-Type: application/json
+
+{}
+
+###
+POST http://localhost:8080/users/register
+Content-Type: application/json
+
+{
+  "password": "toja8",
+  "username": "toja8"
+}
+
+###
+GET http://localhost:8080/trigger
 Accept: application/json
 
 ###
@@ -7,12 +22,21 @@ Authorization: Basic Karolina Karo
 Accept: application/json
 
 ###
-POST http://localhost:8080/users/login?username=lol
+POST http://localhost:8080/users/login?username=toja7
 Content-Type: application/json
 
 {
-  "password": "lol",
-  "username": "lol"
+  "password": "toja7",
+  "username": "toja7"
 }
 
 ###
+
+POST http://localhost:8080/post/create
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAiLCJleHAiOjE3NDI4NzEzMjQsInN1YiI6InRvamE3In0.6voxF8M8eMvVeNFibc4CO_5q4q6vyQrdlNv7GiI-MYc
+Content-Type: application/json
+
+{
+  "content": "Halo halo"
+}
+

@@ -40,3 +40,9 @@
 .register-submit:active{
   background: rgb(225, 17, 17);
 }
+
+.register-title{
+  margin: 0px;
+  margin-bottom: 10px;
+  text-decoration: underline;
+}

@@ -28,7 +28,7 @@ CREATE TABLE post(
     account_id INTEGER NOT NULL,
     CONSTRAINT fk_posts_account
         FOREIGN KEY (account_id)
-        REFERENCES accounts(id)
+        REFERENCES account(id)
         ON DELETE CASCADE
 );
 

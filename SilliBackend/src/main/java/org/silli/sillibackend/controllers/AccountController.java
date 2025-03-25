@@ -1,6 +1,5 @@
 package org.silli.sillibackend.controllers;
 
-import org.silli.sillibackend.models.Account;
 import org.silli.sillibackend.models.AccountDto;
 import org.silli.sillibackend.services.AccountService;
 import org.springframework.http.ResponseEntity;
@@ -8,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@CrossOrigin("http://localhost:4200")
 @RequestMapping("/users")
 public class AccountController {
 
@@ -21,12 +19,9 @@ public class AccountController {
 
     @PostMapping("/register")
     public ResponseEntity<Object> register(@RequestBody AccountDto accountDto) {
-        var account = new Account();
-        account.setUsername(accountDto.getUsername());
-        account.setPassword(accountDto.getPassword());
-        account.setEnabled(1);
-        account.setAuthority("ROLE_USER");
-        accountService.persist(account);
+
+
+        accountService.persist(accountDto);
 
         return ResponseEntity.ok().build();
     }

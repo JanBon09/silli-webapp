@@ -3,10 +3,13 @@ package org.silli.sillibackend.services;
 import org.silli.sillibackend.models.Account;
 import org.silli.sillibackend.models.AccountUserDetails;
 import org.silli.sillibackend.repositories.AccountRepository;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.logging.Logger;
 
 // Service responsible   for that takes process in authentication by retrieving accounts with given username
 @Service

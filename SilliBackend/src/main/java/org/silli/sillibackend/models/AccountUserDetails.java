@@ -16,12 +16,12 @@ public class AccountUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return username;
+        return password;
     }
 
     @Override
     public String getUsername(){
-        return password;
+        return username;
     }
 
     public void setUsername(String username) {

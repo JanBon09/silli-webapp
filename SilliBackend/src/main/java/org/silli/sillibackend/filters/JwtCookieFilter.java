@@ -26,7 +26,12 @@ public class JwtCookieFilter extends OncePerRequestFilter {
         JwsHeader jwsHeader = JwsHeader.with(() -> "HS256").build();
         String token = encoder.encode(JwtEncoderParameters.from(jwsHeader, jwtClaimsSet)).getTokenValue();
 
-        return new Cookie("JWT", token);
+
+        Cookie cookie = new Cookie("JWT", token);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setMaxAge(300);
+        return cookie;
     }
 
     @Override

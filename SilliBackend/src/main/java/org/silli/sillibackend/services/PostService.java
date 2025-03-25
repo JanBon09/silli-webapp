@@ -1,13 +1,11 @@
 package org.silli.sillibackend.services;
 
-import org.silli.sillibackend.models.Account;
-import org.silli.sillibackend.models.AccountDto;
-import org.silli.sillibackend.models.Post;
+import org.silli.sillibackend.models.PostDto;
 import org.silli.sillibackend.repositories.PostRepository;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.logging.Logger;
 
 @Service
 public class PostService {
@@ -17,15 +15,7 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-    public void getAll(){
-
-    }
-
-    public void getByUsername(String username){}
-
-    public void getByPostId(Integer postId){}
-
-    public void persist(Post post, AccountDto accountDto){
-        postRepository.save(post.getContent(), LocalDateTime.now(), 0);
+    public void persist(PostDto postDto, String username){
+        postRepository.save(postDto.getContent(), LocalDateTime.now(), username);
     }
 }

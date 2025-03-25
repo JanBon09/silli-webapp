@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.logging.Logger;
+
 // Component responsible for authenticating users trying to login
 @Component
 public class LoginAuthentication implements AuthenticationProvider {

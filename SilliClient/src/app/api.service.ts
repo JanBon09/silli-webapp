@@ -16,7 +16,6 @@ export class ApiService {
   }
 
   postRequest(path: string, body: any){
-    console.log("POST");
-    return this.http.post(`${this.uri}/${path}`, body);
+    return this.http.post(`${this.uri}/${path}`, body, {withCredentials: true});
   }
 }
