@@ -13,4 +13,7 @@ public interface CommentRepository extends PagingAndSortingRepository<Comment, I
             "(:content, :createdAt, (SELECT id FROM account WHERE username LIKE :username), :postId)")
     void save(String content, LocalDateTime createdAt, String username, int postId);
 
+    @Modifying
+    @Query("DELETE FROM comment WHERE id = :commentId")
+    void delete(int commentId);
 }

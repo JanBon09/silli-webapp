@@ -8,8 +8,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -36,10 +36,30 @@ public class GroupController {
 
     @PostMapping("/create")
     public ResponseEntity<Object> createGroup(Authentication authentication, @RequestBody GroupDto groupDto){
-        Jwt jwt = (Jwt) authentication.getPrincipal();
-        String username = jwt.getSubject();
+        groupService.persist(authentication, groupDto);
 
-        groupService.persist(groupDto, username);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/change-name")
+    public ResponseEntity<Object> changeName(Authentication authentication, @RequestBody GroupDto groupDto,
+                                             @RequestParam String newName){
+        try{
+            groupService.changeName(authentication, groupDto, newName);
+        } catch (AuthorizationServiceException e){
+            return ResponseEntity.status(401).build();
+        }
+
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<Object> deleteGroup(Authentication authentication, @RequestBody GroupDto groupDto){
+        try{
+            groupService.delete(authentication, groupDto);
+        } catch(AuthorizationServiceException e){
+            return ResponseEntity.status(401).build();
+        }
 
         return ResponseEntity.ok().build();
     }

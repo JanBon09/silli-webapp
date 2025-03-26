@@ -12,6 +12,7 @@ import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+
 @Component
 public class JwtCookieFilter extends OncePerRequestFilter {
     private final JwtTokenManagment jwtTokenManagment;
@@ -45,10 +46,9 @@ public class JwtCookieFilter extends OncePerRequestFilter {
 
         }
 
-        if(response.getStatus() != 200){
-            return;
+        if(response.getStatus() == 200){
+            response.addCookie(createJwtCookie(request.getParameter("username")));
         }
 
-        response.addCookie(createJwtCookie(request.getParameter("username")));
     }
 }

@@ -2,12 +2,13 @@ package org.silli.sillibackend.models;
 
 import org.springframework.data.annotation.Id;
 
-public class GroupDto {
+public class GroupDto implements ManipulableEntity{
     @Id
     private int id;
 
     private String name;
     private String accessibility;
+    private int accountId;
 
     public int getId() {
         return id;
@@ -21,6 +22,10 @@ public class GroupDto {
         return accessibility;
     }
 
+    public int getAccountId(){
+        return accountId;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -31,5 +36,9 @@ public class GroupDto {
 
     public void setAccessibility(String accessibility) {
         this.accessibility = accessibility;
+    }
+
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
     }
 }

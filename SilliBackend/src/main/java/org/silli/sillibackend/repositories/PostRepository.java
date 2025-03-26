@@ -13,4 +13,11 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Integer
     @Query("INSERT INTO post (content, createdat, account_id) VALUES (:content, :createdat, (SELECT id FROM account WHERE username LIKE :username))")
     void save(String content, LocalDateTime createdat, String username);
 
+    @Modifying
+    @Query("DELETE FROM post WHERE id = :postId")
+    void delete(int postId);
+
+    @Query("SELECT account_id FROM post WHERE id = :postId")
+    int findAccountId(int postId);
+
 }

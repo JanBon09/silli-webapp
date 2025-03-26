@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
@@ -35,11 +36,30 @@ public class CommentController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Object> createComment(Authentication authentication, @RequestParam int postId, @RequestBody CommentDto commentDto){
-        Jwt jwt = (Jwt) authentication.getPrincipal();
-        String username = jwt.getSubject();
+    public ResponseEntity<Object> createComment(Authentication authentication, @RequestBody CommentDto commentDto){
+        commentService.persist(authentication, commentDto);
 
-        commentService.persist(commentDto, username, postId);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/delete/creator")
+    public ResponseEntity<Object> deleteCommentAsCreator(Authentication authentication, @RequestBody CommentDto commentDto){
+        try{
+            commentService.deleteAsCreator(authentication, commentDto);
+        } catch(AuthorizationServiceException e){
+            return ResponseEntity.status(401).build();
+        }
+
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/delete/post-creator")
+    public ResponseEntity<Object> deleteCommentAsPostCreator(Authentication authentication, @RequestBody CommentDto commentDto){
+        try{
+            commentService.deleteAsPostCreator(authentication, commentDto);
+        } catch(AuthorizationServiceException e){
+            return ResponseEntity.status(401).build();
+        }
 
         return ResponseEntity.ok().build();
     }

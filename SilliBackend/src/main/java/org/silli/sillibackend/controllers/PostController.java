@@ -4,18 +4,22 @@ import org.silli.sillibackend.models.Post;
 import org.silli.sillibackend.models.PostDto;
 import org.silli.sillibackend.repositories.PostRepository;
 import org.silli.sillibackend.services.PostService;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/post")
 public class PostController {
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(PostController.class);
     private final PostService postService;
 
     public PostController(PostService postService, PostRepository postRepository) {
@@ -37,10 +41,21 @@ public class PostController {
 
     @PostMapping("/create")
     public ResponseEntity<Object> createPost(Authentication authentication, @RequestBody PostDto postDto) {
-        Jwt jwt = (Jwt) authentication.getPrincipal();
-        String username = jwt.getSubject();
+        postService.persist(authentication, postDto);
 
-        postService.persist(postDto, username);
+        return ResponseEntity.status(200).build();
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<Object> deletePost(Authentication authentication, @RequestBody PostDto postDto) {
+        Logger logger = Logger.getLogger(this.getClass().getName());
+        logger.info("I am in");
+        try{
+            postService.delete(authentication, postDto);
+        } catch(AuthorizationServiceException e){
+            return ResponseEntity.status(401).build();
+        }
+
 
         return ResponseEntity.status(200).build();
     }
