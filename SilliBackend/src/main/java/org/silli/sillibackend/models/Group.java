@@ -1,17 +1,22 @@
 package org.silli.sillibackend.models;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
 
+@Table("social_group")
 public class Group {
     @Id
     private int id;
 
     private String name;
+    @Column("createdat")
     private LocalDateTime createdAt;
-    private Account account;
-    private Iterable<Account> members;
+    private String accessibility;
+    @Column("account_id")
+    private int accountId;
 
     public int getId() {
         return id;
@@ -25,12 +30,8 @@ public class Group {
         return createdAt;
     }
 
-    public Account getAccount() {
-        return account;
-    }
-
-    public Iterable<Account> getMembers() {
-        return members;
+    public int getAccountId() {
+        return accountId;
     }
 
     public void setId(int id) {
@@ -45,11 +46,8 @@ public class Group {
         this.createdAt = createdAt;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
     }
 
-    public void setMembers(Iterable<Account> members) {
-        this.members = members;
-    }
 }

@@ -28,6 +28,7 @@ Content-Type: application/json
 
 ###
 GET http://localhost:8080/trigger
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAiLCJleHAiOjE3NDI5NTAyODgsInN1YiI6InRvamE4In0._twDtdUPk5UNd9JzyoL8bXvGfUZ6s14oDtlzZc9M6UU
 Accept: application/json
 
 ###
@@ -35,7 +36,7 @@ GET http://localhost:8080/users
 Authorization: Basic Karolina Karo
 Accept: application/json
 
-###
+###JSESSIONID=6DFBE807949DEBA141FEA1684938DD95
 POST http://localhost:8080/users/login?username=toja8
 Content-Type: application/json
 

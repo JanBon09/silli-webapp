@@ -32,19 +32,21 @@ CREATE TABLE post(
         ON DELETE CASCADE
 );
 
-CREATE TABLE group (
+CREATE TABLE social_group (
     id SERIAL PRIMARY KEY,
     name VARCHAR(64) NOT NULL UNIQUE,
     createdAt TIMESTAMP NOT NULL,
-    
+    accessibility VARCHAR(7) NOT NULL,
     account_id INTEGER NOT NULL,
     CONSTRAINT fk_posts_account
         FOREIGN KEY (account_id)
-        REFERENCES accounts(id)
-        ON DELETE CASCADE
+        REFERENCES account(id)
+        ON DELETE CASCADE,
+    CONSTRAINT check_accessibility
+        CHECK (accessibility LIKE 'OPEN' OR accessibility LIKE 'PRIVATE' OR accessibility LIKE 'HIDDEN')
 );
 
-CREATE TABLE group_request (
+CREATE TABLE social_group_request (
     account_id INTEGER NOT NULL,
     group_id INTEGER NOT NULL,
     PRIMARY KEY (account_id, group_id),
@@ -53,17 +55,17 @@ CREATE TABLE group_request (
         REFERENCES account(id),
     CONSTRAINT fk_reqgro_group
         FOREIGN KEY (group_id)
-        REFERENCES group(id),
-)
+        REFERENCES social_group(id)
+);
 
-CREATE TABLE accounts_member (
+CREATE TABLE social_group_member (
     account_id INTEGER,
     group_id INTEGER,
     PRIMARY KEY (account_id, group_id),
     CONSTRAINT fk_accgro_account
         FOREIGN KEY (account_id)
-        REFERENCES accounts(id),
+        REFERENCES account(id),
     CONSTRAINT fk_accgro_group
         FOREIGN KEY (group_id)
-        REFERENCES groups(id)
+        REFERENCES social_group(id)
 );

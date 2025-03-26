@@ -1,8 +1,6 @@
 package org.silli.sillibackend.repositories;
 
 import org.silli.sillibackend.models.Post;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
