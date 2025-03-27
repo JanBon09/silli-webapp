@@ -7,14 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface GroupMembershipRepository extends CrudRepository<Account, Long> {
     @Modifying
-    @Query("INSERT INTO social_group_member VALUES ((SELECT id FROM account WHERE username LIKE :username), :groupId)")
-    void openAddMember(String username, int groupId);
-
-    @Modifying
-    @Query("INSERT INTO social_group_request VALUES ((SELECT id FROM account WHERE username LIKE :username), :groupId)")
-    void addRequest(String username, int groupId);
-
-    @Modifying
     @Query("DO $$ " +
             "DECLARE acc_id INTEGER; " +
             "BEGIN " +
@@ -25,12 +17,12 @@ public interface GroupMembershipRepository extends CrudRepository<Account, Long>
     void acceptRequest(String username, int groupId);
 
     @Modifying
-    @Query("DELETE FROM social_group_request WHERE account_id = " +
-            "(SELECT id FROM account WHERE usenrame LIKE :username) AND groupd_id = :groupdId")
-    void deleteRequest(String username, int groupId);
+    @Query("DELETE FROM social_group_member WHERE account_id = " +
+            "(SELECT id FROM account WHERE username LIKE :username) AND group_id = :groupId")
+    void deleteMember(String username, int groupId);
 
     @Modifying
-    @Query("DELETE FROM social_group_member WHERE account_id = " +
-            "(SELECT id FROM account WHERE usenrame LIKE :username) AND groupd_id = :groupdId")
-    void deleteMember(String username, int groupId);
+    @Query("DELETE FROM social_group_request WHERE account_id = " +
+            "(SELECT id FROM account WHERE username LIKE :username) AND group_id = :groupId")
+    void deleteRequest(String accountId, int groupId);
 }

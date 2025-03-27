@@ -33,4 +33,12 @@ public class EntityManipulationAuthService {
 
         return id == manipulableEntityCreatorId;
     }
+
+    public boolean checkAccountIdByEntity(int accountId, ManipulableEntity manipulableEntity) {
+        return accountId == manipulableEntity.getAccountId();
+    }
+
+    public boolean checkAccountIdById(int accountId, int manipulableEntityCreatorId) {
+        return accountId == manipulableEntityCreatorId;
+    }
 }

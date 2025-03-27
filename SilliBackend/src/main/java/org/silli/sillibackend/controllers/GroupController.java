@@ -42,8 +42,8 @@ public class GroupController {
     }
 
     @PostMapping("/change-name")
-    public ResponseEntity<Object> changeName(Authentication authentication, @RequestBody GroupDto groupDto,
-                                             @RequestParam String newName){
+    public ResponseEntity<Object> changeName(Authentication authentication, @RequestParam("new-name") String newName
+            ,@RequestBody GroupDto groupDto){
         try{
             groupService.changeName(authentication, groupDto, newName);
         } catch (AuthorizationServiceException e){

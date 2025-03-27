@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.logging.Logger;
 
-// Service responsible   for that takes process in authentication by retrieving accounts with given username
+// Service responsible for retrieving UserDetails from db. Used in authentication process
 @Service
 public class LoginUserDetailsService implements UserDetailsService {
     private final AccountRepository accountRepository;
@@ -20,6 +20,7 @@ public class LoginUserDetailsService implements UserDetailsService {
         this.accountRepository = accountRepository;
     }
 
+    // Method
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Account account = accountRepository.findByUsername(username);

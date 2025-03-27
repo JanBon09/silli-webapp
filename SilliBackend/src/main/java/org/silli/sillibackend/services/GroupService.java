@@ -40,7 +40,7 @@ public class GroupService {
             throw new AuthorizationServiceException("Unathorized");
         }
 
-        groupRepository.updateName(groupDto.getName(), newName);
+        groupRepository.updateName(groupDto.getId(), newName);
     }
 
     public void delete(Authentication authentication, GroupDto groupDto) throws AuthorizationServiceException{

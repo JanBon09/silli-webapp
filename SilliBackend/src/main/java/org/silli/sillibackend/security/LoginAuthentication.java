@@ -11,8 +11,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.logging.Logger;
-
 // Component responsible for authenticating users trying to login
 @Component
 public class LoginAuthentication implements AuthenticationProvider {
@@ -29,11 +27,15 @@ public class LoginAuthentication implements AuthenticationProvider {
         return authentication.equals(AccountDto.class);
     }
 
+    // Method takes Authentication object made by AccountService and compares it with the actual data stored in database
+    // for account with given username
     @Override
     public Authentication authenticate(Authentication authentication) throws BadCredentialsException {
+        // Username and password that were send via request
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
 
+        // Retrieving UserDetails for account with given username
         UserDetails userDetails;
         try{
              userDetails = userDetailsService.loadUserByUsername(username);

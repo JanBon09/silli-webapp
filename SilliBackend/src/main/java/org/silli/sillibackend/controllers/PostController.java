@@ -14,8 +14,6 @@ import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.logging.Logger;
-
 @RestController
 @RequestMapping("/post")
 public class PostController {
@@ -48,8 +46,6 @@ public class PostController {
 
     @DeleteMapping("/delete")
     public ResponseEntity<Object> deletePost(Authentication authentication, @RequestBody PostDto postDto) {
-        Logger logger = Logger.getLogger(this.getClass().getName());
-        logger.info("I am in");
         try{
             postService.delete(authentication, postDto);
         } catch(AuthorizationServiceException e){

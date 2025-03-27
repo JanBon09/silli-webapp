@@ -12,7 +12,7 @@ import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-
+// Filter responsible for cookie creation and assigment to users that successfully ran through authentication process
 @Component
 public class JwtCookieFilter extends OncePerRequestFilter {
     private final JwtTokenManagment jwtTokenManagment;
@@ -21,6 +21,7 @@ public class JwtCookieFilter extends OncePerRequestFilter {
         this.jwtTokenManagment = jwtTokenManagment;
     }
 
+    // Could be moved into standalone service
     private Cookie createJwtCookie(String username){
         JwtClaimsSet jwtClaimsSet = jwtTokenManagment.jwtClaimSet(username);
         JwtEncoder encoder = jwtTokenManagment.jwtEncoder();

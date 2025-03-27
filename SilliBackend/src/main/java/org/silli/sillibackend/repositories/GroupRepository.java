@@ -14,8 +14,8 @@ public interface GroupRepository extends PagingAndSortingRepository<Group, Integ
     void save(String name, LocalDateTime createdAt, String accessibility, String username);
 
     @Modifying
-    @Query("UPDATE social_group SET name = :newName WHERE name LIKE :name")
-    void updateName(String name, String newName);
+    @Query("UPDATE social_group SET name = :newName WHERE id = :groupId")
+    void updateName(int groupId, String newName);
 
     @Modifying
     @Query("DELETE FROM social_group WHERE id = :groupId")
