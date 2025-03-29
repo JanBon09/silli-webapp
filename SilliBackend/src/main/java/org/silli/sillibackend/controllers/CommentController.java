@@ -43,9 +43,9 @@ public class CommentController {
     }
 
     @DeleteMapping("/delete/creator")
-    public ResponseEntity<Object> deleteCommentAsCreator(Authentication authentication, @RequestBody CommentDto commentDto){
+    public ResponseEntity<Object> deleteCommentAsCreator(Authentication authentication, @RequestParam int commentId){
         try{
-            commentService.deleteAsCreator(authentication, commentDto);
+            commentService.deleteAsCreator(authentication, commentId);
         } catch(AuthorizationServiceException e){
             return ResponseEntity.status(401).build();
         }
@@ -54,9 +54,9 @@ public class CommentController {
     }
 
     @DeleteMapping("/delete/post-creator")
-    public ResponseEntity<Object> deleteCommentAsPostCreator(Authentication authentication, @RequestBody CommentDto commentDto){
+    public ResponseEntity<Object> deleteCommentAsPostCreator(Authentication authentication, @RequestParam int commentId){
         try{
-            commentService.deleteAsPostCreator(authentication, commentDto);
+            commentService.deleteAsPostCreator(authentication, commentId);
         } catch(AuthorizationServiceException e){
             return ResponseEntity.status(401).build();
         }

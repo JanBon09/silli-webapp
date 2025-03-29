@@ -6,8 +6,9 @@ public class AccountDto {
     @Id
     private int id;
 
-    private String username;
     private String password;
+    private String username;
+
 
     public int getId() {
         return id;

@@ -58,7 +58,6 @@ public class AccountService {
     }
 
     public String introduce(int id){
-
         return accountRepository.findPublicInfoByID(id);
     }
 

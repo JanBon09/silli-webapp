@@ -43,9 +43,9 @@ public class GroupController {
 
     @PostMapping("/change-name")
     public ResponseEntity<Object> changeName(Authentication authentication, @RequestParam("new-name") String newName
-            ,@RequestBody GroupDto groupDto){
+            , @RequestParam("group-id") int groupId){
         try{
-            groupService.changeName(authentication, groupDto, newName);
+            groupService.changeName(authentication, groupId, newName);
         } catch (AuthorizationServiceException e){
             return ResponseEntity.status(401).build();
         }
@@ -54,9 +54,9 @@ public class GroupController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Object> deleteGroup(Authentication authentication, @RequestBody GroupDto groupDto){
+    public ResponseEntity<Object> deleteGroup(Authentication authentication, @RequestParam("group-id") int groupId){
         try{
-            groupService.delete(authentication, groupDto);
+            groupService.delete(authentication, groupId);
         } catch(AuthorizationServiceException e){
             return ResponseEntity.status(401).build();
         }

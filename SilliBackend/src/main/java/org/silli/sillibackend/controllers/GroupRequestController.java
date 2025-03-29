@@ -5,7 +5,6 @@ import org.silli.sillibackend.models.GroupDto;
 import org.silli.sillibackend.services.GroupRequestService;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,8 +34,6 @@ public class GroupRequestController {
 
         return ResponseEntity.ok().build();
     }
-
-    // Here
 
     @DeleteMapping("/cancel")
     public ResponseEntity<Object> cancel(Authentication authentication, @RequestParam String entity,

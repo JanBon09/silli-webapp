@@ -1,13 +1,12 @@
 import {Component} from '@angular/core';
-import {LoginService} from './login.service';
 import {FormsModule} from '@angular/forms';
+import {AuthService} from './auth.service';
 
 @Component({
   selector: 'login',
   imports: [
     FormsModule
   ],
-  providers: [LoginService],
   template: `
     <div class="login-container">
       <div class="login">
@@ -17,7 +16,7 @@ import {FormsModule} from '@angular/forms';
 
         <label for="password">Password: </label>
         <input class="login-input" id="password" type="text" name="password" [(ngModel)]="password">
-        <button (click)="this.loginService.login(this.username, this.password)" class="login-submit">Login</button>
+        <button (click)="this.login(this.username, this.password)" class="login-submit">Login</button>
       </div>
     </div>
   `,
@@ -28,5 +27,13 @@ export class LoginComponent {
   username: string = '';
   password: string = '';
 
-  constructor(public loginService: LoginService) {}
+  constructor(public authService: AuthService) {}
+
+  login(username: string, password: string) {
+    this.authService.loginCall(username, password).subscribe({
+        next: next => {},
+        error: error => {console.log(error);}
+      }
+    );
+  }
 }

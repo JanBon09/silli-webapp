@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {RouterLink, RouterLinkActive} from '@angular/router';
-import {NgIf} from '@angular/common';
-import {LoginService} from './login.service';
+import {AsyncPipe, NgIf} from '@angular/common';
+import {AuthService} from './auth.service';
 
 @Component({
   selector: 'navbar',
@@ -9,14 +9,15 @@ import {LoginService} from './login.service';
   imports: [
     RouterLink,
     RouterLinkActive,
-    NgIf
+    NgIf,
+    AsyncPipe
   ],
   styleUrls: ['navbar.component.css']
 })
 
 export class NavbarComponent {
-  isLoggedIn$: boolean;
-  constructor(public loginService: LoginService) {
-    this.isLoggedIn$ = this.loginService.isLoggedIn();
+  isLoggedIn$;
+  constructor(public authService: AuthService) {
+   this.isLoggedIn$ = this.authService.isLoggedIn()
   }
 }

@@ -1,13 +1,12 @@
 import {Component} from '@angular/core';
-import {RegisterService} from './register.service';
 import {FormsModule} from '@angular/forms';
+import {AuthService} from './auth.service';
 
 @Component({
   selector: 'register',
   imports: [
     FormsModule
   ],
-  providers: [RegisterService],
   template: `
     <div class="register-container">
       <div class="register">
@@ -17,7 +16,7 @@ import {FormsModule} from '@angular/forms';
 
         <label for="password">Password: </label>
         <input class="register-input" id="password" type="text" name="password" [(ngModel)]="password" >
-        <button (click)="this.registerService.register(this.username, this.password)" class="register-submit">Register</button>
+        <button (click)="this.authService.registerCall(this.username, this.password)" class="register-submit">Register</button>
       </div>
     </div>
   `,
@@ -25,8 +24,7 @@ import {FormsModule} from '@angular/forms';
 })
 
 export class RegisterComponent {
-  constructor(public registerService: RegisterService) { }
+  constructor(public authService: AuthService) { }
   username: string = '';
   password: string = '';
-
 }

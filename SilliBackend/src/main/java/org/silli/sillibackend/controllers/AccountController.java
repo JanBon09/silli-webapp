@@ -2,8 +2,11 @@ package org.silli.sillibackend.controllers;
 
 import org.silli.sillibackend.models.AccountDto;
 import org.silli.sillibackend.services.AccountService;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.logging.Logger;
 
 
 @RestController
@@ -32,7 +35,7 @@ public class AccountController {
         return ResponseEntity.status(returnCode).build();
     }
 
-    @GetMapping
+    @GetMapping("who-am-i")
     public ResponseEntity<String> whoAmI(@RequestBody int id) {
         var publicInfo = accountService.introduce(id);
 

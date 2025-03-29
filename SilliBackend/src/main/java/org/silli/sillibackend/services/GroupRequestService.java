@@ -11,17 +11,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class GroupRequestService {
-    private final AccountRepository accountRepository;
     private final GroupRequestRepository groupRequestRepository;
     private final JwtDecodingService jwtDecodingService;
-    private final EntityManipulationAuthService entityManipulationAuthService;
 
-    public GroupRequestService(GroupRequestRepository groupRequestRepository, JwtDecodingService jwtDecodingService,
-                               EntityManipulationAuthService entityManipulationAuthService, AccountRepository accountRepository) {
+    public GroupRequestService(GroupRequestRepository groupRequestRepository, JwtDecodingService jwtDecodingService) {
         this.groupRequestRepository = groupRequestRepository;
         this.jwtDecodingService = jwtDecodingService;
-        this.entityManipulationAuthService = entityManipulationAuthService;
-        this.accountRepository = accountRepository;
     }
 
     public void joinAttempt(Authentication authentication, GroupDto groupDto)  throws ExecutionControl.NotImplementedException {

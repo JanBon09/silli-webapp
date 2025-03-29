@@ -12,6 +12,9 @@ import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import java.util.logging.Logger;
+
+
 // Filter responsible for cookie creation and assigment to users that successfully ran through authentication process
 @Component
 public class JwtCookieFilter extends OncePerRequestFilter {
@@ -31,23 +34,22 @@ public class JwtCookieFilter extends OncePerRequestFilter {
 
         Cookie cookie = new Cookie("JWT", token);
         cookie.setHttpOnly(true);
-        cookie.setSecure(true);
+        cookie.setSecure(false);
         cookie.setMaxAge(300);
         return cookie;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain){
-
-
         try{
             filterChain.doFilter(request, response);
-        }
-        catch(Exception e){
+        } catch(Exception e){
 
         }
 
         if(response.getStatus() == 200){
+            Logger logger = Logger.getLogger(JwtCookieFilter.class.getName());
+            logger.info("Setting a fucking cookie");
             response.addCookie(createJwtCookie(request.getParameter("username")));
         }
 

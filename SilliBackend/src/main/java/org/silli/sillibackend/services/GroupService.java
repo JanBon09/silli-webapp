@@ -34,21 +34,21 @@ public class GroupService {
         groupRepository.save(groupDto.getName(), LocalDateTime.now(), groupDto.getAccessibility(), username);
     }
 
-    public void changeName(Authentication authentication, GroupDto groupDto, String newName)
+    public void changeName(Authentication authentication, int groupId, String newName)
             throws AuthorizationServiceException{
-        if(!entityManipulationAuthService.checkAuthByEntity(authentication, groupDto)){
+        if(!entityManipulationAuthService.checkAuthByEntity(authentication, groupId, groupRepository)){
             throw new AuthorizationServiceException("Unathorized");
         }
 
-        groupRepository.updateName(groupDto.getId(), newName);
+        groupRepository.updateName(groupId, newName);
     }
 
-    public void delete(Authentication authentication, GroupDto groupDto) throws AuthorizationServiceException{
-        if(!entityManipulationAuthService.checkAuthByEntity(authentication, groupDto)){
+    public void delete(Authentication authentication, int groupId) throws AuthorizationServiceException{
+        if(!entityManipulationAuthService.checkAuthByEntity(authentication, groupId, groupRepository)){
             throw new AuthorizationServiceException("Unathorized");
         }
 
-        groupRepository.delete(groupDto.getId());
+        groupRepository.delete(groupId);
     }
 
 }

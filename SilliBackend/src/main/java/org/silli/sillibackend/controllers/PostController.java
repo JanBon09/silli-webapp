@@ -45,9 +45,9 @@ public class PostController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Object> deletePost(Authentication authentication, @RequestBody PostDto postDto) {
+    public ResponseEntity<Object> deletePost(Authentication authentication, @RequestParam int postId) {
         try{
-            postService.delete(authentication, postDto);
+            postService.delete(authentication, postId);
         } catch(AuthorizationServiceException e){
             return ResponseEntity.status(401).build();
         }

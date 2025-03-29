@@ -7,7 +7,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.time.LocalDateTime;
 
-public interface CommentRepository extends PagingAndSortingRepository<Comment, Integer> {
+public interface CommentRepository extends PagingAndSortingRepository<Comment, Integer>, EntityRepository {
     @Modifying
     @Query("INSERT INTO comment (content, createdat, account_id, post_id) VALUES " +
             "(:content, :createdAt, (SELECT id FROM account WHERE username LIKE :username), :postId)")
@@ -16,4 +16,7 @@ public interface CommentRepository extends PagingAndSortingRepository<Comment, I
     @Modifying
     @Query("DELETE FROM comment WHERE id = :commentId")
     void delete(int commentId);
+
+    @Query("SELECT account_id FROM comment WHERE id = :entityId")
+    int findOwner(int entityId);
 }

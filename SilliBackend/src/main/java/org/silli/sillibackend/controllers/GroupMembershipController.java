@@ -24,9 +24,9 @@ public class GroupMembershipController {
 
     @DeleteMapping("/remove")
     public ResponseEntity<Object> remove(Authentication authentication, @RequestParam String memberUsername,
-                                         @RequestParam String entity, GroupDto groupDto) {
+                                         @RequestParam String entity, @RequestParam int groupId) {
         try{
-            groupMembershipService.delete(authentication, groupDto, entity, memberUsername);
+            groupMembershipService.delete(authentication, groupId, entity, memberUsername);
         } catch(AuthorizationServiceException e){
             ResponseEntity.status(401).build();
         } catch(ExecutionControl.NotImplementedException e){
@@ -38,9 +38,9 @@ public class GroupMembershipController {
 
     @PostMapping("/accept")
     public ResponseEntity<Object> acceptRequest(Authentication authentication, @RequestParam String memberUsername,
-                                         GroupDto groupDto) {
+                                         @RequestParam("group-id") int groupId) {
         try{
-            groupMembershipService.accept(authentication, groupDto, memberUsername);
+            groupMembershipService.accept(authentication, groupId, memberUsername);
         } catch (AuthorizationServiceException e){
             ResponseEntity.status(401).build();
         }

@@ -38,11 +38,11 @@ public class PostService {
         postRepository.save(postDto.getContent(), LocalDateTime.now(), username);
     }
 
-    public void delete(Authentication authentication, PostDto postDto) throws AuthorizationServiceException {
-        if(!entityManipulationAuthService.checkAuthByEntity(authentication, postDto)){
+    public void delete(Authentication authentication, int postId) throws AuthorizationServiceException {
+        if(!entityManipulationAuthService.checkAuthByEntity(authentication, postId, postRepository)){
             throw new AuthorizationServiceException("Unathorized");
         }
 
-        postRepository.delete(postDto.getId());
+        postRepository.delete(postId);
     }
 }

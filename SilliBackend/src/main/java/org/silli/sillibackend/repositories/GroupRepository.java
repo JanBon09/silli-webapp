@@ -7,7 +7,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.time.LocalDateTime;
 
-public interface GroupRepository extends PagingAndSortingRepository<Group, Integer> {
+public interface GroupRepository extends PagingAndSortingRepository<Group, Integer>, EntityRepository {
     @Modifying
     @Query("INSERT INTO social_group (name, createdat, accessibility, account_id) VALUES " +
             "(:name, :createdAt, :accessibility, (SELECT id FROM account WHERE username LIKE :username))")
@@ -20,4 +20,7 @@ public interface GroupRepository extends PagingAndSortingRepository<Group, Integ
     @Modifying
     @Query("DELETE FROM social_group WHERE id = :groupId")
     void delete(int groupId);
+
+    @Query("SELECT account_id FROM social_group WHERE id = :entityId")
+    int findOwner(int entityId);
 }
