@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.time.Instant;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.logging.Logger;
 
@@ -40,7 +41,7 @@ public class JwtTokenManagment {
         return JwtClaimsSet.builder()
                 .subject(username)
                 .issuer(currentEnvironment)
-                .expiresAt(Instant.now().plus(5, ChronoUnit.MINUTES))
+                .expiresAt(Instant.now().atZone(ZoneId.of("Europe/Warsaw")).toInstant().plus(5, ChronoUnit.MINUTES))
                 .build();
     }
 

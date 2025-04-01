@@ -1,5 +1,6 @@
 package org.silli.sillibackend.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.silli.sillibackend.models.Post;
 import org.silli.sillibackend.models.PostDto;
 import org.silli.sillibackend.repositories.PostRepository;
@@ -38,16 +39,16 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Object> createPost(Authentication authentication, @RequestBody PostDto postDto) {
-        postService.persist(authentication, postDto);
+    public ResponseEntity<Object> createPost(HttpServletRequest request, @RequestBody PostDto postDto) {
+        postService.persist((String) request.getAttribute("Subject"), postDto);
 
         return ResponseEntity.status(200).build();
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Object> deletePost(Authentication authentication, @RequestParam int postId) {
+    public ResponseEntity<Object> deletePost(HttpServletRequest request, @RequestParam int postId) {
         try{
-            postService.delete(authentication, postId);
+            postService.delete((String) request.getAttribute("Subject"), postId);
         } catch(AuthorizationServiceException e){
             return ResponseEntity.status(401).build();
         }

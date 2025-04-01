@@ -7,15 +7,15 @@ import {ErrorService} from './error.service';
 })
 
 export class ApiService {
-  private uri: string = '/api';
+  //private uri: string = '/api';
 
   constructor(private http: HttpClient, private errorService: ErrorService) { }
 
   getRequest(path: string){
-    return this.http.get(`${this.uri}/${path}`, {withCredentials: true, transferCache: true});
+    return this.http.get(`/api${path}`, {withCredentials: true, transferCache: true});
   }
 
   postRequest(path: string, body: any){
-    return this.http.post(`${this.uri}/${path}`, body, {withCredentials: true});
+    return this.http.post(`/api${path}`, body, {withCredentials: true});
   }
 }

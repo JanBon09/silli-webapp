@@ -1,19 +1,28 @@
 package org.silli.sillibackend.controllers;
 
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.silli.sillibackend.security.JwtTokenManagment;
+import org.silli.sillibackend.models.Message;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.List;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.util.Set;
 import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/trigger")
 public class TriggerController {
+
+    @GetMapping
+    public ResponseEntity<String> test(HttpServletRequest request) {
+        Logger logger = Logger.getLogger(this.getClass().getName());
+
+        logger.info((String) request.getAttribute("Subject"));
+
+        return ResponseEntity.ok("!Trigger test!");
+    }
 }

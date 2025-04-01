@@ -1,5 +1,6 @@
 package org.silli.sillibackend.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jdk.jshell.spi.ExecutionControl;
 import org.silli.sillibackend.models.GroupDto;
 import org.silli.sillibackend.services.GroupRequestService;
@@ -25,9 +26,9 @@ public class GroupRequestController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<Object> join(Authentication authentication, @RequestBody GroupDto groupDto){
+    public ResponseEntity<Object> join(HttpServletRequest request, @RequestBody GroupDto groupDto){
         try{
-            groupRequestService.joinAttempt(authentication, groupDto);
+            groupRequestService.joinAttempt((String) request.getAttribute("Subject"), groupDto);
         } catch(ExecutionControl.NotImplementedException e){
             return ResponseEntity.status(403).build();
         }
@@ -36,10 +37,10 @@ public class GroupRequestController {
     }
 
     @DeleteMapping("/cancel")
-    public ResponseEntity<Object> cancel(Authentication authentication, @RequestParam String entity,
+    public ResponseEntity<Object> cancel(HttpServletRequest request, @RequestParam String entity,
                                                 @RequestBody GroupDto groupDto){
         try{
-            groupRequestService.delete(authentication, entity, groupDto);
+            groupRequestService.delete((String) request.getAttribute("Subject"), entity, groupDto);
         }catch (ChangeSetPersister.NotFoundException e){
             return ResponseEntity.status(404).build();
         }

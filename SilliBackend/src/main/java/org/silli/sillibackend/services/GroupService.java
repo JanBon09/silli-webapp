@@ -6,7 +6,6 @@ import org.silli.sillibackend.repositories.GroupRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AuthorizationServiceException;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -15,36 +14,31 @@ import java.time.LocalDateTime;
 public class GroupService {
     private final GroupRepository groupRepository;
     private final EntityManipulationAuthService entityManipulationAuthService;
-    private final JwtDecodingService jwtDecodingService;
 
-    public GroupService(GroupRepository groupRepository, EntityManipulationAuthService entityManipulationAuthService,
-                        JwtDecodingService jwtDecodingService) {
+    public GroupService(GroupRepository groupRepository, EntityManipulationAuthService entityManipulationAuthService) {
         this.groupRepository = groupRepository;
         this.entityManipulationAuthService = entityManipulationAuthService;
-        this.jwtDecodingService = jwtDecodingService;
     }
 
     public Page<Group> findPageSortedBy(Pageable pageable) {
         return groupRepository.findAll(pageable);
     }
 
-    public void persist(Authentication authentication, GroupDto groupDto) {
-        String username = jwtDecodingService.decodeUsernameFromJWT(authentication);
-
-        groupRepository.save(groupDto.getName(), LocalDateTime.now(), groupDto.getAccessibility(), username);
+    public void persist(String subject, GroupDto groupDto) {
+        groupRepository.save(groupDto.getName(), LocalDateTime.now(), groupDto.getAccessibility(), subject);
     }
 
-    public void changeName(Authentication authentication, int groupId, String newName)
+    public void changeName(String subject, int groupId, String newName)
             throws AuthorizationServiceException{
-        if(!entityManipulationAuthService.checkAuthByEntity(authentication, groupId, groupRepository)){
+        if(!entityManipulationAuthService.authBySubjectAndEntity(subject, groupId, groupRepository)){
             throw new AuthorizationServiceException("Unathorized");
         }
 
         groupRepository.updateName(groupId, newName);
     }
 
-    public void delete(Authentication authentication, int groupId) throws AuthorizationServiceException{
-        if(!entityManipulationAuthService.checkAuthByEntity(authentication, groupId, groupRepository)){
+    public void delete(String subject, int groupId) throws AuthorizationServiceException{
+        if(!entityManipulationAuthService.authBySubjectAndEntity(subject, groupId, groupRepository)){
             throw new AuthorizationServiceException("Unathorized");
         }
 

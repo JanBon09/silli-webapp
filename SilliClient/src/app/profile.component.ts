@@ -19,7 +19,7 @@ export class ProfileComponent implements OnInit {
   constructor(private apiService: ApiService) {}
 
   ngOnInit() {
-    this.apiService.getRequest("trigger").subscribe({
+    this.apiService.getRequest("/api/trigger").subscribe({
       next: data => {},
       error: error => {console.log(error);}
     });

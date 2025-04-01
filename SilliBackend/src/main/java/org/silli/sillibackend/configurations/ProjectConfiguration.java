@@ -28,10 +28,7 @@ public class ProjectConfiguration {
         http.csrf(AbstractHttpConfigurer::disable);
         http.authenticationProvider(authenticationProvider);
         http.authorizeHttpRequests(c ->
-                c.requestMatchers("/post", "/comment", "/group").authenticated().anyRequest().permitAll())
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt(
-                        jwt -> jwt.decoder(jwtTokenManagment.jwtDecoder())
-                ));
+                c.requestMatchers("/post", "/comment", "/group").authenticated().anyRequest().permitAll());
 
         return http.build();
     }

@@ -15,13 +15,10 @@ import java.time.LocalDateTime;
 public class PostService {
     private final PostRepository postRepository;
     private final EntityManipulationAuthService entityManipulationAuthService;
-    private final JwtDecodingService jwtDecodingService;
 
-    public PostService(PostRepository postRepository, EntityManipulationAuthService entityManipulationAuthService,
-                       JwtDecodingService jwtDecodingService) {
+    public PostService(PostRepository postRepository, EntityManipulationAuthService entityManipulationAuthService) {
         this.postRepository = postRepository;
         this.entityManipulationAuthService = entityManipulationAuthService;
-        this.jwtDecodingService = jwtDecodingService;
     }
 
     public Page<Post> findPageSortedBy(Pageable pageable) {
@@ -32,14 +29,12 @@ public class PostService {
         return postRepository.findAccountId(postId);
     }
 
-    public void persist(Authentication authentication, PostDto postDto) {
-        String username = jwtDecodingService.decodeUsernameFromJWT(authentication);
-
-        postRepository.save(postDto.getContent(), LocalDateTime.now(), username);
+    public void persist(String subject, PostDto postDto) {
+        postRepository.save(postDto.getContent(), LocalDateTime.now(), subject);
     }
 
-    public void delete(Authentication authentication, int postId) throws AuthorizationServiceException {
-        if(!entityManipulationAuthService.checkAuthByEntity(authentication, postId, postRepository)){
+    public void delete(String subject, int postId) throws AuthorizationServiceException {
+        if(!entityManipulationAuthService.authBySubjectAndEntity(subject, postId, postRepository)){
             throw new AuthorizationServiceException("Unathorized");
         }
 

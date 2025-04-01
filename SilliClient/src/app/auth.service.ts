@@ -12,7 +12,7 @@ export class Account {
 
 export class AuthService {
   private loggedInSubject = new BehaviorSubject<boolean>(false);
-  private uri: string = 'http://localhost:8080';
+  //private uri: string = 'http://localhost:8080';
   loggedInStatus$ = this.loggedInSubject.asObservable();
 
 
@@ -22,13 +22,13 @@ export class AuthService {
   loginCall(username: string, password: string): Observable<any> {
     let account = new Account(username, password);
 
-    return this.http.post(`${this.uri}/users/login?username=` + username, account, {withCredentials: true}).pipe(tap(() => this.loggedInSubject.next(true)));
+    return this.http.post(`/api/users/login?username=` + username, account, {withCredentials: true}).pipe(tap(() => this.loggedInSubject.next(true)));
   }
 
   registerCall(username: string, password: string): Observable<any> {
     let account = new Account(username, password);
 
-    return this.http.post(`${this.uri}/users/register`, account);
+    return this.http.post(`/api/users/register`, account, {withCredentials: true});
   }
 
   logout() {

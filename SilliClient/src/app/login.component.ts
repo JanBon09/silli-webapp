@@ -15,7 +15,7 @@ import {AuthService} from './auth.service';
         <input class="login-input" id="username" type="text" name="username" [(ngModel)]="username">
 
         <label for="password">Password: </label>
-        <input class="login-input" id="password" type="text" name="password" [(ngModel)]="password">
+        <input class="login-input" id="password" type="password" name="password" [(ngModel)]="password">
         <button (click)="this.login(this.username, this.password)" class="login-submit">Login</button>
       </div>
     </div>

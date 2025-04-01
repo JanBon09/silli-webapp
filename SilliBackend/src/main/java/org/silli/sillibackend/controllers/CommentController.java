@@ -1,5 +1,6 @@
 package org.silli.sillibackend.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.silli.sillibackend.models.Comment;
 import org.silli.sillibackend.models.CommentDto;
 import org.silli.sillibackend.services.CommentService;
@@ -9,8 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AuthorizationServiceException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -36,16 +35,16 @@ public class CommentController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Object> createComment(Authentication authentication, @RequestBody CommentDto commentDto){
-        commentService.persist(authentication, commentDto);
+    public ResponseEntity<Object> createComment(HttpServletRequest request, @RequestBody CommentDto commentDto){
+        commentService.persist((String) request.getAttribute("Subject"), commentDto);
 
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/delete/creator")
-    public ResponseEntity<Object> deleteCommentAsCreator(Authentication authentication, @RequestParam int commentId){
+    public ResponseEntity<Object> deleteCommentAsCreator(HttpServletRequest request, @RequestParam int commentId){
         try{
-            commentService.deleteAsCreator(authentication, commentId);
+            commentService.deleteAsCreator((String) request.getAttribute("Subject"), commentId);
         } catch(AuthorizationServiceException e){
             return ResponseEntity.status(401).build();
         }
@@ -54,9 +53,9 @@ public class CommentController {
     }
 
     @DeleteMapping("/delete/post-creator")
-    public ResponseEntity<Object> deleteCommentAsPostCreator(Authentication authentication, @RequestParam int commentId){
+    public ResponseEntity<Object> deleteCommentAsPostCreator(HttpServletRequest request, @RequestParam int commentId){
         try{
-            commentService.deleteAsPostCreator(authentication, commentId);
+            commentService.deleteAsPostCreator((String) request.getAttribute("Subject"), commentId);
         } catch(AuthorizationServiceException e){
             return ResponseEntity.status(401).build();
         }

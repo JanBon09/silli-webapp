@@ -1,5 +1,6 @@
 package org.silli.sillibackend.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.silli.sillibackend.models.Group;
 import org.silli.sillibackend.models.GroupDto;
 import org.silli.sillibackend.services.GroupService;
@@ -9,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AuthorizationServiceException;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -35,17 +35,17 @@ public class GroupController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Object> createGroup(Authentication authentication, @RequestBody GroupDto groupDto){
-        groupService.persist(authentication, groupDto);
+    public ResponseEntity<Object> createGroup(HttpServletRequest request, @RequestBody GroupDto groupDto){
+        groupService.persist((String) request.getAttribute("Subject"), groupDto);
 
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/change-name")
-    public ResponseEntity<Object> changeName(Authentication authentication, @RequestParam("new-name") String newName
+    public ResponseEntity<Object> changeName(HttpServletRequest request, @RequestParam("new-name") String newName
             , @RequestParam("group-id") int groupId){
         try{
-            groupService.changeName(authentication, groupId, newName);
+            groupService.changeName((String) request.getAttribute("Subject"), groupId, newName);
         } catch (AuthorizationServiceException e){
             return ResponseEntity.status(401).build();
         }
@@ -54,9 +54,9 @@ public class GroupController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Object> deleteGroup(Authentication authentication, @RequestParam("group-id") int groupId){
+    public ResponseEntity<Object> deleteGroup(HttpServletRequest request, @RequestParam("group-id") int groupId){
         try{
-            groupService.delete(authentication, groupId);
+            groupService.delete((String) request.getAttribute("Subject"), groupId);
         } catch(AuthorizationServiceException e){
             return ResponseEntity.status(401).build();
         }

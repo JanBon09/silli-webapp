@@ -36,6 +36,8 @@ public class JwtCookieFilter extends OncePerRequestFilter {
         cookie.setHttpOnly(true);
         cookie.setSecure(false);
         cookie.setMaxAge(300);
+        // Remember about this thing
+        cookie.setPath("/");
         return cookie;
     }
 
@@ -48,8 +50,6 @@ public class JwtCookieFilter extends OncePerRequestFilter {
         }
 
         if(response.getStatus() == 200){
-            Logger logger = Logger.getLogger(JwtCookieFilter.class.getName());
-            logger.info("Setting a fucking cookie");
             response.addCookie(createJwtCookie(request.getParameter("username")));
         }
 

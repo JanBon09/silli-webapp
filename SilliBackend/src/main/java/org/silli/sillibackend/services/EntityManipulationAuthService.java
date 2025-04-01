@@ -13,21 +13,16 @@ import java.util.logging.Logger;
 public class EntityManipulationAuthService {
 
     private final AccountRepository accountRepository;
-    private final JwtDecodingService jwtDecodingService;
 
-    public EntityManipulationAuthService(AccountRepository accountRepository, JwtDecodingService jwtDecodingService) {
+    public EntityManipulationAuthService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
-        this.jwtDecodingService = jwtDecodingService;
     }
 
-    public boolean checkAuthByEntity(Authentication authentication, int manipulableEntityId,
+    //Checks if username decoded from JWT is the same that is assigned as a owner of an object
+    public boolean authBySubjectAndEntity(String subject, int manipulableEntityId,
                                      EntityRepository entityRepository) {
-        String username = jwtDecodingService.decodeUsernameFromJWT(authentication);
-        int accountIdAuth = accountRepository.findIdByUsername(username);
-
+        int accountIdAuth = accountRepository.findIdByUsername(subject);
         int accountIdRepo = entityRepository.findOwner(manipulableEntityId);
-        Logger logger = Logger.getLogger(this.getClass().getName());
-        logger.info("Account id repo: " + accountIdRepo);
 
         return accountIdAuth == accountIdRepo;
     }

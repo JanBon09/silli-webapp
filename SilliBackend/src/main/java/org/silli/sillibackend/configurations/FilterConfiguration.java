@@ -17,6 +17,7 @@ public class FilterConfiguration {
         this.jwtDecoderFilter = jwtDecoderFilter;
     }
 
+    // Attaching filter for creating and sending HttpOnly cookie with JWT
     @Bean
     public FilterRegistrationBean<JwtCookieFilter> cookieFilter() {
         FilterRegistrationBean<JwtCookieFilter> registrationBean =
@@ -27,6 +28,7 @@ public class FilterConfiguration {
         return registrationBean;
     }
 
+    // Filter for decoding JWT from cookie
     @Bean
     public FilterRegistrationBean<JwtDecoderFilter> decoderFilter() {
         FilterRegistrationBean<JwtDecoderFilter> registrationBean =

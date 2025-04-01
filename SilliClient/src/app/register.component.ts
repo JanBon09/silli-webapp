@@ -16,7 +16,7 @@ import {AuthService} from './auth.service';
 
         <label for="password">Password: </label>
         <input class="register-input" id="password" type="text" name="password" [(ngModel)]="password" >
-        <button (click)="this.authService.registerCall(this.username, this.password)" class="register-submit">Register</button>
+        <button (click)="this.register(this.username, this.password)" class="register-submit">Register</button>
       </div>
     </div>
   `,
@@ -27,4 +27,11 @@ export class RegisterComponent {
   constructor(public authService: AuthService) { }
   username: string = '';
   password: string = '';
+
+  register(username: string, password: string) {
+    this.authService.registerCall(username, password).subscribe({
+      next: next => {},
+      error: error => {console.log(error);}
+    });
+  }
 }

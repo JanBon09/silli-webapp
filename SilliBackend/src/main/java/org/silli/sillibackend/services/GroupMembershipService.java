@@ -21,9 +21,9 @@ public class GroupMembershipService {
     }
 
     // Service method for deleting members or requests as a group owner
-    public void delete(Authentication authentication, int groupId, String entity, String username)
+    public void delete(String subject, int groupId, String entity, String username)
     throws AuthorizationServiceException, ExecutionControl.NotImplementedException {
-        if(!entityManipulationAuthService.checkAuthByEntity(authentication, groupId, groupRepository)) {
+        if(!entityManipulationAuthService.authBySubjectAndEntity(subject, groupId, groupRepository)) {
             throw new AuthorizationServiceException("Unauthorized");
         }
 
@@ -40,8 +40,8 @@ public class GroupMembershipService {
     }
 
     // Accepting user request for joining a group
-    public void accept(Authentication authentication, int groupId, String username) throws AuthorizationServiceException {
-        if(!entityManipulationAuthService.checkAuthByEntity(authentication, groupId, groupRepository)) {
+    public void accept(String subject, int groupId, String username) throws AuthorizationServiceException {
+        if(!entityManipulationAuthService.authBySubjectAndEntity(subject, groupId, groupRepository)) {
             throw new AuthorizationServiceException("Unauthorized");
         }
 
