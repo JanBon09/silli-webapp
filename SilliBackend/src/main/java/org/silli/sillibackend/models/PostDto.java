@@ -2,12 +2,15 @@ package org.silli.sillibackend.models;
 
 import org.springframework.data.annotation.Id;
 
-public class PostDto implements ManipulableEntity{
+import java.time.LocalDateTime;
+
+public class PostDto {
     @Id
     private int id;
 
     private String content;
-    private int accountId;
+    private LocalDateTime createdAt;
+    private String username;
 
     public int getId() {
         return id;
@@ -17,9 +20,9 @@ public class PostDto implements ManipulableEntity{
         return content;
     }
 
-    public int getAccountId() {
-        return accountId;
-    }
+    public LocalDateTime getCreatedAt() {return createdAt;}
+
+    public String getUsername() {return username;}
 
     public void setId(int id) {
         this.id = id;
@@ -29,7 +32,7 @@ public class PostDto implements ManipulableEntity{
         this.content = content;
     }
 
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
-    }
+    public void setCreatedAt(LocalDateTime createdAt) {this.createdAt = createdAt;}
+
+    public void setUsername(String username) {this.username = username;}
 }

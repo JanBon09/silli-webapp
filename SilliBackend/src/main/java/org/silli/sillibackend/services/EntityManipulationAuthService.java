@@ -1,13 +1,8 @@
 package org.silli.sillibackend.services;
 
-import org.silli.sillibackend.models.ManipulableEntity;
 import org.silli.sillibackend.repositories.AccountRepository;
 import org.silli.sillibackend.repositories.EntityRepository;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-
-import java.util.logging.Logger;
-
 
 @Service
 public class EntityManipulationAuthService {

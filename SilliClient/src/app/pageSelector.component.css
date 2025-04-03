@@ -1,0 +1,9 @@
+.page-selector-btn{
+  display: inline-block;
+  margin-left: 10px;
+  margin-right: 10px;
+  border: none;
+  width: 3vw;
+  height: 5vh;
+  border-radius: 30px;
+}

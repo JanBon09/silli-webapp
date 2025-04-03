@@ -1,25 +1,46 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 import {ApiService} from './api.service';
 
-export class Author{
-  constructor(username: string) {
-  }
-}
+export class PostDisplayForm{
+  constructor(
+    public id: number = 0,
+    public content: string = '',
+    public creationDate: Date = new Date(),
+    public username: string = ''
+  ){}
 
-export class Post{
-  constructor(public id: number, public content: string, public createdAt: Date) {}
+  assignObject(object: any){
+    this.id = object.id;
+    this.content = object.content;
+    this.creationDate = object.creationDate;
+    this.username = object.username;
+  }
 }
 
 @Component({
   selector: "post",
   template: `
-    <div class="post-container">
-      <div class="post-header"></div>
-      <div class="post-main"></div>
-      <div class="post-footer"></div>
-    </div>
+
   `
 })
 
-export class PostComponent {
+export class PostComponent implements OnInit{
+  postId: number | undefined;
+  postDisplayForm: PostDisplayForm;
+
+  constructor(private router: Router, private apiService: ApiService) {
+    this.postId = this.router.getCurrentNavigation()?.id;
+    this.postDisplayForm = new PostDisplayForm();
+  }
+
+  ngOnInit() {
+    this.apiService.getRequest(`/post?postId=${this.postId}`).subscribe({
+      next: next => {
+        this.postDisplayForm.assignObject(next);
+        console.log(this.postDisplayForm);
+        },
+      error: error => {console.log(error)},
+    })
+  }
 }

@@ -2,12 +2,11 @@ package org.silli.sillibackend.models;
 
 import org.springframework.data.annotation.Id;
 
-public class CommentDto implements ManipulableEntity{
+public class CommentDto{
     @Id
     private int id;
 
     private String content;
-    private int accountId;
     private int postId;
 
     public int getId() {
@@ -16,10 +15,6 @@ public class CommentDto implements ManipulableEntity{
 
     public String getContent() {
         return content;
-    }
-
-    public int getAccountId(){
-        return accountId;
     }
 
     public int getPostId(){
@@ -32,10 +27,6 @@ public class CommentDto implements ManipulableEntity{
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public void setCreatorId(int accountId) {
-        this.accountId = accountId;
     }
 
     public void setPostId(int postId) {

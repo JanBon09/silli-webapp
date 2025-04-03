@@ -5,7 +5,7 @@ import org.silli.sillibackend.models.Post;
 import org.silli.sillibackend.models.PostDto;
 import org.silli.sillibackend.repositories.PostRepository;
 import org.silli.sillibackend.services.PostService;
-import org.slf4j.LoggerFactory;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -55,19 +55,16 @@ public class PostController {
         return ResponseEntity.status(200).build();
     }
 
-    @GetMapping("specific")
-    public ResponseEntity<Post> getPostById(HttpServletRequest request, @RequestParam int postId) {
-        Post post = null;
+    @GetMapping("display-form")
+    public ResponseEntity<PostDto> getPostInDisplayForm(@RequestParam int postId) {
+        PostDto postDto;
         try{
-            post = postService.getPostById((String)request.getAttribute("Subject"), postId);
-        } catch(AuthorizationServiceException e){
-            return ResponseEntity.status(401).build();
-        }
-
-        if (post == null){
+            postDto = postService.getPostDtoById(postId);
+        } catch (ChangeSetPersister.NotFoundException e) {
             return ResponseEntity.status(404).build();
         }
 
-        return ResponseEntity.status(200).body(post);
+        return ResponseEntity.status(200).body(postDto);
     }
+
 }

@@ -3,13 +3,13 @@ package org.silli.sillibackend.services;
 import org.silli.sillibackend.models.Post;
 import org.silli.sillibackend.models.PostDto;
 import org.silli.sillibackend.repositories.PostRepository;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.logging.Logger;
 
 @Service
 public class PostService {
@@ -29,6 +29,7 @@ public class PostService {
     }
 
     public int getAccountIdById(int postId){
+
         return postRepository.findAccountId(postId);
     }
 
@@ -44,14 +45,12 @@ public class PostService {
         postRepository.delete(postId);
     }
 
-    public Post getPostById(String subject, int postId) {
-        Logger logger = Logger.getLogger(this.getClass().getName());
-        logger.info(subject);
-
-        if(!entityManipulationAuthService.authBySubjectAndEntity(subject, postId, postRepository)){
-            throw new AuthorizationServiceException("Unathorized");
+    public PostDto getPostDtoById(int postId) throws ChangeSetPersister.NotFoundException {
+        PostDto postDto = postRepository.findPostInDisplayForm(postId);
+        if(postDto == null){
+            throw new ChangeSetPersister.NotFoundException();
         }
+        return postDto;
 
-        return postRepository.findPostById(postId);
     }
 }

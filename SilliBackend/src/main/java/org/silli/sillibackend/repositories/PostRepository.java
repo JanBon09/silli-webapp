@@ -1,6 +1,7 @@
 package org.silli.sillibackend.repositories;
 
 import org.silli.sillibackend.models.Post;
+import org.silli.sillibackend.models.PostDto;
 import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -23,6 +24,7 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Integer
     @Query("SELECT account_id FROM post WHERE id = :entityId")
     int findOwner(int entityId);
 
-    @Query("SELECT * FROM post WHERE id = :postId")
-    Post findPostById(int postId);
+    @Query("SELECT p.id, p.content, p.createdat, a.username FROM post AS p FULL JOIN account AS a ON a.id = p.account_id" +
+            " WHERE p.id = :postId")
+    PostDto findPostInDisplayForm(int postId);
 }

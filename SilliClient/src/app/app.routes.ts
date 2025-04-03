@@ -3,6 +3,7 @@ import {HomeComponent} from './home.component';
 import {LoginComponent} from './login.component';
 import {RegisterComponent} from './register.component';
 import {ProfileComponent} from './profile.component';
+import {PostComponent} from './post.component';
 
 export const routes: Routes = [
   {
@@ -16,6 +17,9 @@ export const routes: Routes = [
   },
   {
     path: 'profile', component: ProfileComponent, pathMatch: 'full'
+  },
+  {
+    path: 'post/:id', component: PostComponent, pathMatch: 'full'
   },
   {
     path: '', redirectTo: 'home', pathMatch: 'full'

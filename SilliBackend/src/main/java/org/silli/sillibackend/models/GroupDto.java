@@ -2,7 +2,7 @@ package org.silli.sillibackend.models;
 
 import org.springframework.data.annotation.Id;
 
-public class GroupDto implements ManipulableEntity{
+public class GroupDto{
     @Id
     private int id;
 
