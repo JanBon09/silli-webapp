@@ -12,13 +12,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AuthorizationServiceException;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/post")
 public class PostController {
-    private static final org.slf4j.Logger log = LoggerFactory.getLogger(PostController.class);
     private final PostService postService;
 
     public PostController(PostService postService, PostRepository postRepository) {
@@ -55,5 +53,21 @@ public class PostController {
 
 
         return ResponseEntity.status(200).build();
+    }
+
+    @GetMapping("specific")
+    public ResponseEntity<Post> getPostById(HttpServletRequest request, @RequestParam int postId) {
+        Post post = null;
+        try{
+            post = postService.getPostById((String)request.getAttribute("Subject"), postId);
+        } catch(AuthorizationServiceException e){
+            return ResponseEntity.status(401).build();
+        }
+
+        if (post == null){
+            return ResponseEntity.status(404).build();
+        }
+
+        return ResponseEntity.status(200).body(post);
     }
 }

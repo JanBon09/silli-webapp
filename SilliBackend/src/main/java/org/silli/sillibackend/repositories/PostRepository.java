@@ -22,4 +22,7 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Integer
 
     @Query("SELECT account_id FROM post WHERE id = :entityId")
     int findOwner(int entityId);
+
+    @Query("SELECT * FROM post WHERE id = :postId")
+    Post findPostById(int postId);
 }

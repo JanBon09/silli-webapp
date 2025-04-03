@@ -7,9 +7,7 @@ import {ErrorService} from './error.service';
 })
 
 export class ApiService {
-  //private uri: string = '/api';
-
-  constructor(private http: HttpClient, private errorService: ErrorService) { }
+  constructor(private http: HttpClient) { }
 
   getRequest(path: string){
     return this.http.get(`/api${path}`, {withCredentials: true, transferCache: true});

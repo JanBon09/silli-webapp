@@ -61,4 +61,8 @@ public class AccountService {
         return accountRepository.findPublicInfoByID(id);
     }
 
+    public Integer getAccountIdByUsername(String username){
+        return accountRepository.findIdByUsername(username);
+    }
+
 }

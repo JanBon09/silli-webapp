@@ -34,8 +34,10 @@ public class FilterConfiguration {
         FilterRegistrationBean<JwtDecoderFilter> registrationBean =
                 new FilterRegistrationBean<>();
         registrationBean.setFilter(jwtDecoderFilter);
-        registrationBean.addUrlPatterns("/trigger");
+        registrationBean.addUrlPatterns("/trigger", "/post", "/post/*", "/group", "/group/*",
+                "/comment", "/comment/*");
         registrationBean.setOrder(1);
         return registrationBean;
     }
 }
+

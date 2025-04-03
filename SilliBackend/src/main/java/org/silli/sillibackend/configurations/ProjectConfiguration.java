@@ -27,8 +27,8 @@ public class ProjectConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
         http.authenticationProvider(authenticationProvider);
-        http.authorizeHttpRequests(c ->
-                c.requestMatchers("/post", "/comment", "/group").authenticated().anyRequest().permitAll());
+        // No general authorization included, because there is a custom authorization logic implemented based on filters
+        // and JWT
 
         return http.build();
     }

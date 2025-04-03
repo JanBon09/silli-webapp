@@ -5,13 +5,13 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.silli.sillibackend.security.JwtTokenManagment;
+import org.springframework.security.oauth2.jwt.BadJwtException;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.time.Instant;
-import java.util.logging.Logger;
 
 @Component
 public class JwtDecoderFilter extends OncePerRequestFilter {
@@ -33,8 +33,14 @@ public class JwtDecoderFilter extends OncePerRequestFilter {
 
         for (Cookie cookie : cookies) {
             if(cookie.getName().equals("JWT")) {
-                   jwt = jwtDecoder.decode(cookie.getValue());
-                   break;
+                try{
+                    jwt = jwtDecoder.decode(cookie.getValue());
+                    break;
+                } catch(BadJwtException e){
+                    response.setStatus(401);
+                    return;
+                }
+
             }
         }
 

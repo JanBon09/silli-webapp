@@ -1,0 +1,21 @@
+.posts-container {
+  font-size: 24px;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  margin: auto;
+}
+
+.post-entity{
+  background-color: white;
+  width: 20vw;
+  color: black;
+  padding: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 40px;
+  margin-top: 40px;
+  border-radius: 15px;
+  text-align: left;
+}
