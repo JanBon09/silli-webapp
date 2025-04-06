@@ -1,6 +1,7 @@
 package org.silli.sillibackend.models;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 
 import java.time.LocalDateTime;
 
@@ -9,6 +10,7 @@ public class PostDto {
     private int id;
 
     private String content;
+    @Column("createdat")
     private LocalDateTime createdAt;
     private String username;
 

@@ -55,7 +55,7 @@ public class PostController {
         return ResponseEntity.status(200).build();
     }
 
-    @GetMapping("display-form")
+    @GetMapping("/display-form")
     public ResponseEntity<PostDto> getPostInDisplayForm(@RequestParam int postId) {
         PostDto postDto;
         try{

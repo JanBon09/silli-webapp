@@ -10,21 +10,20 @@ import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.logging.Logger;
 
 @Service
 public class PostService {
     private final PostRepository postRepository;
     private final EntityManipulationAuthService entityManipulationAuthService;
-    private final AccountService accountService;
 
-    public PostService(PostRepository postRepository, EntityManipulationAuthService entityManipulationAuthService,
-                       AccountService accountService) {
+    public PostService(PostRepository postRepository, EntityManipulationAuthService entityManipulationAuthService) {
         this.postRepository = postRepository;
         this.entityManipulationAuthService = entityManipulationAuthService;
-        this.accountService = accountService;
     }
 
     public Page<Post> findPageSortedBy(Pageable pageable) {
+
         return postRepository.findAll(pageable);
     }
 
@@ -36,6 +35,7 @@ public class PostService {
     public void persist(String subject, PostDto postDto) {
         postRepository.save(postDto.getContent(), LocalDateTime.now(), subject);
     }
+
 
     public void delete(String subject, int postId) throws AuthorizationServiceException {
         if(!entityManipulationAuthService.authBySubjectAndEntity(subject, postId, postRepository)){
@@ -50,6 +50,7 @@ public class PostService {
         if(postDto == null){
             throw new ChangeSetPersister.NotFoundException();
         }
+
         return postDto;
 
     }

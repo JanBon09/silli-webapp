@@ -55,4 +55,8 @@ public class CommentService {
 
         commentRepository.delete(commentId);
     }
+
+    public Page<Comment> getAllByPostId(int postId, Pageable pageable) {
+        return commentRepository.findAllByPostId(postId, pageable);
+    }
 }

@@ -1,6 +1,8 @@
 package org.silli.sillibackend.repositories;
 
 import org.silli.sillibackend.models.Comment;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -19,4 +21,6 @@ public interface CommentRepository extends PagingAndSortingRepository<Comment, I
 
     @Query("SELECT account_id FROM comment WHERE id = :entityId")
     int findOwner(int entityId);
+
+    Page<Comment> findAllByPostId(int postId, Pageable pageable);
 }

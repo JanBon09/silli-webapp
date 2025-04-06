@@ -2,15 +2,17 @@ package org.silli.sillibackend.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
 
+@Table("comment")
 public class Comment {
     @Id
     private int id;
     
     private String content;
-    @Column("createdad")
+    @Column("createdat")
     private LocalDateTime createdAt;
 
     @Column("account_id")

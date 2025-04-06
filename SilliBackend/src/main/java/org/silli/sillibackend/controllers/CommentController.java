@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.logging.Logger;
+
 @RestController
 @RequestMapping("/comment")
 public class CommentController {
@@ -61,5 +63,23 @@ public class CommentController {
         }
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/page-by-id")
+    public Page<Comment> getCommentsByPostId(
+             @RequestParam int page, @RequestParam int size,
+             @RequestParam String sortBy, @RequestParam Boolean ascending,
+             @RequestParam int postId
+             ){
+        Sort sort = ascending ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        Page<Comment> commentPage =  commentService.getAllByPostId(postId, pageable);
+
+        Logger logger = Logger.getLogger(this.getClass().getName());
+
+        logger.info(String.valueOf(commentPage.getTotalPages()));
+
+        return commentPage;
     }
 }
