@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ApiService} from './api.service';
 import {CommentsComponent} from './comments.component';
+import {CommentCreatorComponent} from './commentCreator.component';
 
 export class PostDisplay{
   constructor(
@@ -22,23 +23,31 @@ export class PostDisplay{
 @Component({
   selector: "post",
   imports: [
-    CommentsComponent
+    CommentsComponent,
+    CommentCreatorComponent
   ],
   template: `
+    <div class="post-details-page">
     <div class="post-details-container">
       <div class="post-details-header">
         {{ this.postDisplay.id }} {{ this.postDisplay.username }}
       </div>
+      <hr class="post-details-hr">
       <div class="post-details-content">
         {{ this.postDisplay.content }}
       </div>
+      <hr class="post-details-hr">
       <div class="post-details-date">
         {{ this.dateDisplay }}
       </div>
     </div>
 
+      <comment-creator postId="{{postId}}"></comment-creator>
+      <h3 class="comment-section-title">Comments</h3>
     <comments postId="{{postId}}"></comments>
-  `
+    </div>
+  `,
+  styleUrls: ['./post.component.css'],
 })
 
 export class PostComponent implements OnInit{

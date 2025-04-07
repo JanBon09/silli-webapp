@@ -8,19 +8,27 @@ import {Pagination} from './paging.class';
     <div class="comments-container">
         @for (comment of this.comments.content; track comment.id){
           <div class="comment">
+            <div class="comment-content">
             {{comment.content}}
+            </div>
+            <div class="comment-date">
+              {{comment.createdat}}
+            </div>
           </div>
         }
     </div>
-  `
+  `,
+  styleUrls: ['./comments.component.css'],
 })
 
 export class CommentsComponent implements OnInit {
   comments: Pagination;
   @Input() postId: string = '';
 
+  newCommentContent: string = '';
+
   constructor(private apiService: ApiService) {
-    this.comments = new Pagination()
+    this.comments = new Pagination();
   }
 
   ngOnInit() {

@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import {BehaviorSubject, Observable, tap} from 'rxjs';
+import {Router} from '@angular/router';
 
 export class Account {
   constructor(public username: string, public password: string) {}
@@ -12,11 +13,10 @@ export class Account {
 
 export class AuthService {
   private loggedInSubject = new BehaviorSubject<boolean>(false);
-  //private uri: string = 'http://localhost:8080';
   loggedInStatus$ = this.loggedInSubject.asObservable();
 
 
-  constructor(private  http: HttpClient) {
+  constructor(private  http: HttpClient, private router: Router) {
   }
 
   loginCall(username: string, password: string): Observable<any> {
@@ -33,6 +33,7 @@ export class AuthService {
 
   logout() {
     this.loggedInSubject.next(false);
+    this.router.navigate(['/home']);
   }
 
   isLoggedIn(): Observable<boolean> {

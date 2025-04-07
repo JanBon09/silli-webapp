@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {AuthService} from './auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'login',
@@ -19,6 +20,9 @@ import {AuthService} from './auth.service';
         <button (click)="this.login(this.username, this.password)" class="login-submit">Login</button>
       </div>
     </div>
+    <div class="login-alert-container">
+        {{this.alert}}
+    </div>
   `,
   styleUrls: ['./login.component.css']
 })
@@ -26,13 +30,18 @@ import {AuthService} from './auth.service';
 export class LoginComponent {
   username: string = '';
   password: string = '';
+  alert: string = '';
 
-  constructor(public authService: AuthService) {}
+  constructor(public authService: AuthService, private router: Router) { }
 
   login(username: string, password: string) {
     this.authService.loginCall(username, password).subscribe({
-        next: next => {},
-        error: error => {console.log(error);}
+        next: next => {
+          this.router.navigate(['/home']);
+        },
+        error: error => {
+          this.alert = 'Invalid username or password';
+        }
       }
     );
   }
