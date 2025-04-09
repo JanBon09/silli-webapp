@@ -1,28 +1,38 @@
 package org.silli.sillibackend.controllers;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.silli.sillibackend.models.Message;
+import org.silli.sillibackend.security.RefreshTokenManagment;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
-import java.util.Set;
-import java.util.logging.Logger;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.spec.InvalidKeySpecException;
 
 @RestController
 @RequestMapping("/trigger")
 public class TriggerController {
 
+    private final RefreshTokenManagment refreshTokenManagment;
+
+    public TriggerController(RefreshTokenManagment refreshTokenManagment) {
+        this.refreshTokenManagment = refreshTokenManagment;
+    }
+
     @GetMapping
     public ResponseEntity<String> test(HttpServletRequest request) {
-        Logger logger = Logger.getLogger(this.getClass().getName());
 
-        logger.info((String) request.getAttribute("Subject"));
+        PrivateKey privateKey;
 
-        return ResponseEntity.ok("!Trigger test!");
+        try{
+            privateKey = refreshTokenManagment.getKeyFactory();
+        } catch(NoSuchAlgorithmException e){
+            return ResponseEntity.status(404).body(e.getMessage());
+        } catch(InvalidKeySpecException e){
+            return ResponseEntity.status(401).body(e.getMessage());
+        }
+
+
+        return ResponseEntity.ok().body("All good");
     }
 }

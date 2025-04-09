@@ -25,8 +25,6 @@ export class CommentsComponent implements OnInit {
   comments: Pagination;
   @Input() postId: string = '';
 
-  newCommentContent: string = '';
-
   constructor(private apiService: ApiService) {
     this.comments = new Pagination();
   }

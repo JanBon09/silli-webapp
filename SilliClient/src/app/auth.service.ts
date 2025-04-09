@@ -32,6 +32,10 @@ export class AuthService {
   }
 
   logout() {
+    this.http.delete(`/api/users/logout`, {withCredentials: true}).subscribe({
+      next: next => {console.log(next)},
+      error: error => {console.log(error)},
+    });
     this.loggedInSubject.next(false);
     this.router.navigate(['/home']);
   }

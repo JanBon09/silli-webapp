@@ -35,7 +35,7 @@ public class JwtCookieFilter extends OncePerRequestFilter {
         Cookie cookie = new Cookie("JWT", token);
         cookie.setHttpOnly(true);
         cookie.setSecure(false);
-        cookie.setMaxAge(300);
+        cookie.setMaxAge(900);
 
         cookie.setAttribute("SameSite", "strict");
 

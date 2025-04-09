@@ -20,10 +20,10 @@ export const routes: Routes = [
     path: 'profile', component: ProfileComponent, pathMatch: 'full', canActivate: [AuthGuard]
   },
   {
-    path: 'post/:id', component: PostComponent, pathMatch: 'full'
+    path: 'post/:id', component: PostComponent, pathMatch: 'full', canActivate: [AuthGuard]
   },
   {
-    path: '', redirectTo: 'home', pathMatch: 'full'
+    path: '*', redirectTo: 'home', pathMatch: 'full'
   }
 
 ];

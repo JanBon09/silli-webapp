@@ -45,22 +45,4 @@ public class JwtTokenManagment {
                 .build();
     }
 
-    public void tester() throws JOSEException {
-        //Create the TOKEN
-        JwtClaimsSet claims = JwtClaimsSet.builder()
-                .subject("something")
-                .issuer("https://somewhere.com")  //Only this for simplicity
-                .build();
-        var encoder = jwtEncoder();
-        JwsHeader jwsHeader = JwsHeader.with(() -> "HS256").build();
-        String token = encoder.encode(JwtEncoderParameters.from(jwsHeader, claims)).getTokenValue();
-
-        Logger logger = Logger.getLogger(this.getClass().getName());
-
-        logger.info(token);
-        //Decode the TOKEN
-        var decoder = jwtDecoder();
-        Jwt jwt = decoder.decode(token);
-        logger.info(jwt.getSubject());
-    }
 }

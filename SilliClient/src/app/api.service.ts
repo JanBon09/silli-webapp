@@ -16,4 +16,8 @@ export class ApiService {
   postRequest(path: string, body: any){
     return this.http.post(`/api${path}`, body, {withCredentials: true});
   }
+
+  deleteRequest(path: string){
+    return this.http.delete(`/api${path}`, {withCredentials: true});
+  }
 }
